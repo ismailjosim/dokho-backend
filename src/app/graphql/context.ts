@@ -1,8 +1,8 @@
-import type { Request } from "express";
-import jwt from "jsonwebtoken";
+import type { Request } from 'express';
+import jwt from 'jsonwebtoken';
 
-import { envVars } from "@/config/env.js";
-import type { UserRole } from "@/modules/User/user.interface.js";
+import { envVars } from '@/config/env.js';
+import type { UserRole } from '@/modules/User/user.interface.js';
 
 export interface AuthUser {
   id: string;
@@ -17,9 +17,7 @@ export interface GraphQLContext {
 
 export function createContext(req: Request): GraphQLContext {
   const authHeader = req.headers.authorization;
-  const token = authHeader?.startsWith("Bearer ")
-    ? authHeader.replace("Bearer ", "")
-    : null;
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.replace('Bearer ', '') : null;
 
   if (!token) {
     return { req, user: null };

@@ -1,7 +1,7 @@
-import type { Types } from "mongoose";
+import type { Types } from 'mongoose';
 
-export type WorkerAvailability = "AVAILABLE" | "NOT_AVAILABLE";
-export type WorkerStatus = "PENDING" | "APPROVED" | "DEACTIVATED";
+export type WorkerAvailability = 'AVAILABLE' | 'NOT_AVAILABLE';
+export type WorkerStatus = 'PENDING' | 'APPROVED' | 'DEACTIVATED';
 
 export interface IWorkerProfile {
   _id: Types.ObjectId;

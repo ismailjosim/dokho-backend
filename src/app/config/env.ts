@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -15,11 +15,11 @@ interface EnvConfig {
 }
 
 const requiredEnvVars = [
-  "PORT",
-  "DATABASE_URL",
-  "FRONTEND_URL",
-  "JWT_ACCESS_SECRET",
-  "JWT_ACCESS_EXPIRES",
+  'PORT',
+  'DATABASE_URL',
+  'FRONTEND_URL',
+  'JWT_ACCESS_SECRET',
+  'JWT_ACCESS_EXPIRES',
 ];
 
 const loadEnvVars = (): EnvConfig => {
@@ -30,7 +30,7 @@ const loadEnvVars = (): EnvConfig => {
   });
 
   return {
-    NODE_ENV: process.env.NODE_ENV || "development",
+    NODE_ENV: process.env.NODE_ENV || 'development',
     PORT: Number(process.env.PORT),
     DATABASE_URL: process.env.DATABASE_URL as string,
     FRONTEND_URL: process.env.FRONTEND_URL as string,
@@ -38,7 +38,7 @@ const loadEnvVars = (): EnvConfig => {
       ACCESS_SECRET: process.env.JWT_ACCESS_SECRET as string,
       ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES as string,
     },
-    MOCK_OTP: process.env.MOCK_OTP || "123456",
+    MOCK_OTP: process.env.MOCK_OTP || '123456',
   };
 };
 

@@ -1,12 +1,12 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
-import type { IWorkerProfile } from "./workerProfile.interface.js";
+import type { IWorkerProfile } from './workerProfile.interface.js';
 
 const workerProfileSchema = new Schema<IWorkerProfile>(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       unique: true,
       index: true,
@@ -38,20 +38,17 @@ const workerProfileSchema = new Schema<IWorkerProfile>(
     },
     availability: {
       type: String,
-      enum: ["AVAILABLE", "NOT_AVAILABLE"],
-      default: "AVAILABLE",
+      enum: ['AVAILABLE', 'NOT_AVAILABLE'],
+      default: 'AVAILABLE',
     },
     status: {
       type: String,
-      enum: ["PENDING", "APPROVED", "DEACTIVATED"],
-      default: "PENDING",
+      enum: ['PENDING', 'APPROVED', 'DEACTIVATED'],
+      default: 'PENDING',
       index: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export const WorkerProfile = model<IWorkerProfile>(
-  "WorkerProfile",
-  workerProfileSchema,
-);
+export const WorkerProfile = model<IWorkerProfile>('WorkerProfile', workerProfileSchema);

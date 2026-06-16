@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const requestOtpValidation = z.object({
   phone: z.string().min(10).max(16),

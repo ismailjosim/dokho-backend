@@ -8,9 +8,9 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "./src/app",
+
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./src/app/*"]
     }
   },
   "include": ["src"],
