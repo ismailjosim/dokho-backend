@@ -88,6 +88,11 @@ export const WorkerProfileService = {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
     }
 
+    console.info('Worker profile approved', {
+      profileId: profile._id.toString(),
+      adminId: context.user.id,
+    });
+
     return profile;
   },
 
@@ -105,6 +110,11 @@ export const WorkerProfileService = {
     if (!profile) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
     }
+
+    console.info('Worker profile deactivated', {
+      profileId: profile._id.toString(),
+      adminId: context.user.id,
+    });
 
     return profile;
   },
