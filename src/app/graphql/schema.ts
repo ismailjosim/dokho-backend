@@ -53,6 +53,13 @@ export const typeDefs = /* GraphQL */ `
     role: UserRole = CLIENT
   }
 
+  input CreateAdminInput {
+    name: String!
+    phone: String!
+    password: String!
+    setupSecret: String
+  }
+
   input WorkerProfileInput {
     skill: String!
     district: String!
@@ -64,15 +71,22 @@ export const typeDefs = /* GraphQL */ `
 
   type Query {
     health: String!
+    me: User
     workers(skill: String, district: String, limit: Int = 20): [WorkerProfile!]!
+    workerProfile(id: ID!): WorkerProfile!
+    myWorkerProfile: WorkerProfile
     pendingWorkerProfiles: [WorkerProfile!]!
   }
 
   type Mutation {
     createUser(input: CreateUserInput!): User!
+    createAdmin(input: CreateAdminInput!): User!
     requestOtp(phone: String!): OtpResponse!
     verifyOtp(phone: String!, otp: String!): AuthPayload!
+    adminLogin(phone: String!, password: String!): AuthPayload!
     upsertMyWorkerProfile(input: WorkerProfileInput!): WorkerProfile!
+    updateMyAvailability(availability: WorkerAvailability!): WorkerProfile!
     approveWorkerProfile(id: ID!): WorkerProfile!
+    deactivateWorkerProfile(id: ID!): WorkerProfile!
   }
 `;

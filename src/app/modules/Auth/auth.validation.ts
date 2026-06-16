@@ -8,3 +8,8 @@ export const verifyOtpValidation = z.object({
   phone: z.string().min(10).max(16),
   otp: z.string().length(6),
 });
+
+export const adminLoginValidation = z.object({
+  phone: z.string().min(10).max(16),
+  password: z.string().min(8).max(72),
+});

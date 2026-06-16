@@ -24,6 +24,10 @@ const userSchema = new Schema<IUser>(
       enum: userRoles,
       default: 'CLIENT',
     },
+    passwordHash: {
+      type: String,
+      select: false,
+    },
     isOtpVerified: {
       type: Boolean,
       default: false,
@@ -31,5 +35,7 @@ const userSchema = new Schema<IUser>(
   },
   { timestamps: true }
 );
+
+userSchema.index({ role: 1 });
 
 export const User = model<IUser>('User', userSchema);

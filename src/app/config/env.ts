@@ -12,6 +12,7 @@ interface EnvConfig {
     ACCESS_EXPIRES: string;
   };
   MOCK_OTP: string;
+  ADMIN_SETUP_SECRET?: string;
 }
 
 const requiredEnvVars = [
@@ -39,6 +40,7 @@ const loadEnvVars = (): EnvConfig => {
       ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES as string,
     },
     MOCK_OTP: process.env.MOCK_OTP || '123456',
+    ADMIN_SETUP_SECRET: process.env.ADMIN_SETUP_SECRET,
   };
 };
 

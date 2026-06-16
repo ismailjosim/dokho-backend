@@ -7,6 +7,7 @@ export interface IUser {
   name: string;
   phone: string;
   role: UserRole;
+  passwordHash?: string;
   isOtpVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
