@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-const phoneValidation = z.string().trim().min(10).max(16);
+const phoneValidation = z
+  .string()
+  .trim()
+  .regex(/^01\d{9}$/, 'Phone number must be a valid Bangladeshi mobile number');
 
 export const requestOtpValidation = z.object({
   phone: phoneValidation,

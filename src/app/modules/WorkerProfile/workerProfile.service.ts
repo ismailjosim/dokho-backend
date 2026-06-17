@@ -18,17 +18,22 @@ export const WorkerProfileService = {
     const filters = workerSearchValidation.parse(payload ?? {});
     const query: Record<string, unknown> = { status: 'APPROVED' };
 
-    if (filters.skill) query.skill = { $regex: escapeRegex(filters.skill), $options: 'i' };
-    if (filters.district) query.district = { $regex: escapeRegex(filters.district), $options: 'i' };
+    if (filters.skill) query.skill = { $regex: `^${escapeRegex(filters.skill)}`, $options: 'i' };
+    if (filters.district) {
+      query.district = { $regex: `^${escapeRegex(filters.district)}`, $options: 'i' };
+    }
 
-    return WorkerProfile.find(query).populate('user').sort({ updatedAt: -1 }).limit(filters.limit);
+    return WorkerProfile.find(query)
+      .populate({ path: 'user', select: 'name phone role isOtpVerified' })
+      .sort({ updatedAt: -1 })
+      .limit(filters.limit);
   },
 
   async getApprovedWorkerById(id: string) {
     const profile = await WorkerProfile.findOne({
       _id: id,
       status: 'APPROVED',
-    }).populate('user');
+    }).populate({ path: 'user', select: 'name phone role isOtpVerified' });
 
     if (!profile) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
@@ -42,7 +47,10 @@ export const WorkerProfileService = {
       throw new AppError(Number(HttpStatus.FORBIDDEN), 'Worker access required');
     }
 
-    return WorkerProfile.findOne({ user: context.user.id }).populate('user');
+    return WorkerProfile.findOne({ user: context.user.id }).populate({
+      path: 'user',
+      select: 'name phone role isOtpVerified',
+    });
   },
 
   async createMyProfile(context: GraphQLContext, payload: unknown) {
@@ -56,7 +64,7 @@ export const WorkerProfileService = {
       { user: context.user.id },
       { ...data, user: context.user.id, status: 'PENDING' },
       { new: true, upsert: true, runValidators: true }
-    ).populate('user');
+    ).populate({ path: 'user', select: 'name phone role isOtpVerified' });
   },
 
   async updateMyAvailability(context: GraphQLContext, availability: 'AVAILABLE' | 'NOT_AVAILABLE') {
@@ -68,7 +76,7 @@ export const WorkerProfileService = {
       { user: context.user.id },
       { availability },
       { new: true, runValidators: true }
-    ).populate('user');
+    ).populate({ path: 'user', select: 'name phone role isOtpVerified' });
 
     if (!profile) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
@@ -86,7 +94,7 @@ export const WorkerProfileService = {
       { _id: id, status: 'PENDING' },
       { status: 'APPROVED' },
       { new: true }
-    ).populate('user');
+    ).populate({ path: 'user', select: 'name phone role isOtpVerified' });
 
     if (!profile) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Pending worker profile not found');
@@ -109,7 +117,7 @@ export const WorkerProfileService = {
       { _id: id, status: 'PENDING' },
       { status: 'DEACTIVATED' },
       { new: true }
-    ).populate('user');
+    ).populate({ path: 'user', select: 'name phone role isOtpVerified' });
 
     if (!profile) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'Pending worker profile not found');
@@ -128,6 +136,8 @@ export const WorkerProfileService = {
       throw new AppError(Number(HttpStatus.FORBIDDEN), 'Admin access required');
     }
 
-    return WorkerProfile.find({ status: 'PENDING' }).populate('user').sort({ createdAt: -1 });
+    return WorkerProfile.find({ status: 'PENDING' })
+      .populate({ path: 'user', select: 'name phone role isOtpVerified' })
+      .sort({ createdAt: -1 });
   },
 };

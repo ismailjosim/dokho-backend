@@ -51,4 +51,7 @@ const workerProfileSchema = new Schema<IWorkerProfile>(
   { timestamps: true }
 );
 
+workerProfileSchema.index({ status: 1, district: 1, skill: 1, updatedAt: -1 });
+workerProfileSchema.index({ status: 1, createdAt: -1 });
+
 export const WorkerProfile = model<IWorkerProfile>('WorkerProfile', workerProfileSchema);
