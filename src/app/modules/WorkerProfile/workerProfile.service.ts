@@ -82,14 +82,14 @@ export const WorkerProfileService = {
       throw new AppError(Number(HttpStatus.FORBIDDEN), 'Admin access required');
     }
 
-    const profile = await WorkerProfile.findByIdAndUpdate(
-      id,
+    const profile = await WorkerProfile.findOneAndUpdate(
+      { _id: id, status: 'PENDING' },
       { status: 'APPROVED' },
       { new: true }
     ).populate('user');
 
     if (!profile) {
-      throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
+      throw new AppError(Number(HttpStatus.NOT_FOUND), 'Pending worker profile not found');
     }
 
     console.info('Worker profile approved', {
@@ -105,14 +105,14 @@ export const WorkerProfileService = {
       throw new AppError(Number(HttpStatus.FORBIDDEN), 'Admin access required');
     }
 
-    const profile = await WorkerProfile.findByIdAndUpdate(
-      id,
+    const profile = await WorkerProfile.findOneAndUpdate(
+      { _id: id, status: 'PENDING' },
       { status: 'DEACTIVATED' },
       { new: true }
     ).populate('user');
 
     if (!profile) {
-      throw new AppError(Number(HttpStatus.NOT_FOUND), 'Worker profile not found');
+      throw new AppError(Number(HttpStatus.NOT_FOUND), 'Pending worker profile not found');
     }
 
     console.info('Worker profile deactivated', {
