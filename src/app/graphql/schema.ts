@@ -19,7 +19,8 @@ export const typeDefs = /* GraphQL */ `
   type User {
     id: ID!
     name: String!
-    phone: String!
+    phone: String
+    maskedPhone: String
     role: UserRole!
     isOtpVerified: Boolean!
   }

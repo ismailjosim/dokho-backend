@@ -16,6 +16,8 @@ import {
 
 const OTP_EXPIRES_IN_SECONDS = 300;
 const OTP_ALLOWED_ATTEMPTS = 3;
+const OTP_REQUEST_WINDOW_MINUTES = 10;
+const OTP_MAX_REQUESTS_PER_WINDOW = 3;
 
 function createAccessToken(user: { _id: { toString(): string }; phone: string; role: string }) {
   const signOptions: SignOptions = {
@@ -48,6 +50,15 @@ export const AuthService = {
 
     if (!user) {
       throw new AppError(Number(HttpStatus.NOT_FOUND), 'No account found for this phone number');
+    }
+
+    const recentOtpCount = await AuthOtp.countDocuments({
+      phone: data.phone,
+      createdAt: { $gte: new Date(Date.now() - OTP_REQUEST_WINDOW_MINUTES * 60 * 1000) },
+    });
+
+    if (recentOtpCount >= OTP_MAX_REQUESTS_PER_WINDOW) {
+      throw new AppError(429, 'Too many OTP requests. Please try again later');
     }
 
     const otp = createOtpCode();

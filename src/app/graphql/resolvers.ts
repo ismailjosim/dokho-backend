@@ -5,6 +5,13 @@ import { WorkerProfileService } from '@/modules/WorkerProfile/workerProfile.serv
 export const resolvers = {
   User: {
     id: (parent: { _id: string }) => parent._id.toString(),
+    maskedPhone: (parent: { phone?: string }) => {
+      if (!parent.phone || parent.phone.length < 5) {
+        return null;
+      }
+
+      return `${parent.phone.slice(0, 3)}****${parent.phone.slice(-4)}`;
+    },
   },
   WorkerProfile: {
     id: (parent: { _id: string }) => parent._id.toString(),
