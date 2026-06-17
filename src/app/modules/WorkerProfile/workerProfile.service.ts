@@ -13,14 +13,20 @@ function escapeRegex(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function normalizeSearchValue(value?: string) {
+  return value?.split('(')[0]?.trim();
+}
+
 export const WorkerProfileService = {
   async searchWorkers(payload: unknown) {
     const filters = workerSearchValidation.parse(payload ?? {});
     const query: Record<string, unknown> = { status: 'APPROVED' };
+    const skill = normalizeSearchValue(filters.skill);
+    const district = normalizeSearchValue(filters.district);
 
-    if (filters.skill) query.skill = { $regex: `^${escapeRegex(filters.skill)}`, $options: 'i' };
-    if (filters.district) {
-      query.district = { $regex: `^${escapeRegex(filters.district)}`, $options: 'i' };
+    if (skill) query.skill = { $regex: escapeRegex(skill), $options: 'i' };
+    if (district) {
+      query.district = { $regex: escapeRegex(district), $options: 'i' };
     }
 
     return WorkerProfile.find(query)
