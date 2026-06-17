@@ -9,13 +9,17 @@ import {
   workerSearchValidation,
 } from './workerProfile.validation.js';
 
+function escapeRegex(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export const WorkerProfileService = {
   async searchWorkers(payload: unknown) {
     const filters = workerSearchValidation.parse(payload ?? {});
     const query: Record<string, unknown> = { status: 'APPROVED' };
 
-    if (filters.skill) query.skill = filters.skill;
-    if (filters.district) query.district = filters.district;
+    if (filters.skill) query.skill = { $regex: escapeRegex(filters.skill), $options: 'i' };
+    if (filters.district) query.district = { $regex: escapeRegex(filters.district), $options: 'i' };
 
     return WorkerProfile.find(query).populate('user').sort({ updatedAt: -1 }).limit(filters.limit);
   },

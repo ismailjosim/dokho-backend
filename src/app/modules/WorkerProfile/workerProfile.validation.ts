@@ -10,7 +10,7 @@ export const workerProfileInputValidation = z.object({
 });
 
 export const workerSearchValidation = z.object({
-  skill: z.string().optional(),
-  district: z.string().optional(),
+  skill: z.string().trim().max(60).optional(),
+  district: z.string().trim().max(60).optional(),
   limit: z.number().int().min(1).max(50).default(20),
 });
