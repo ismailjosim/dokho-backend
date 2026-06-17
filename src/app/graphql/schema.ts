@@ -74,6 +74,7 @@ export const typeDefs = /* GraphQL */ `
     health: String!
     me: User
     workers(skill: String, district: String, limit: Int = 20): [WorkerProfile!]!
+    workerServices: [String!]!
     workerProfile(id: ID!): WorkerProfile!
     myWorkerProfile: WorkerProfile
     pendingWorkerProfiles: [WorkerProfile!]!

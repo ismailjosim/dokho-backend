@@ -21,6 +21,7 @@ export const resolvers = {
     me: (_parent: unknown, _args: unknown, context: { user: { id: string } | null }) =>
       context.user ? UserService.getUserById(context.user.id) : null,
     workers: (_parent: unknown, args: unknown) => WorkerProfileService.searchWorkers(args),
+    workerServices: () => WorkerProfileService.getServiceNames(),
     workerProfile: (_parent: unknown, args: { id: string }) =>
       WorkerProfileService.getApprovedWorkerById(args.id),
     myWorkerProfile: (

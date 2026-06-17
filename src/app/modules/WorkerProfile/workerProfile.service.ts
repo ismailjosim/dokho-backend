@@ -29,6 +29,17 @@ export const WorkerProfileService = {
       .limit(filters.limit);
   },
 
+  async getServiceNames() {
+    const skills = await WorkerProfile.distinct('skill', {
+      skill: { $type: 'string', $ne: '' },
+    });
+
+    return skills
+      .map((skill) => skill.trim())
+      .filter(Boolean)
+      .sort((first, second) => first.localeCompare(second, 'bn'));
+  },
+
   async getApprovedWorkerById(id: string) {
     const profile = await WorkerProfile.findOne({
       _id: id,
