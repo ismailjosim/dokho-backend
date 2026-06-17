@@ -10,6 +10,12 @@ export interface IWorkerProfile {
   district: string;
   upazila?: string;
   area?: string;
+  profilePhotoUrl?: string;
+  profilePhotoPublicId?: string;
+  nidFrontUrl?: string;
+  nidFrontPublicId?: string;
+  nidBackUrl?: string;
+  nidBackPublicId?: string;
   experienceYears: number;
   availability: WorkerAvailability;
   status: WorkerStatus;

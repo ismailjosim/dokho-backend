@@ -13,6 +13,11 @@ interface EnvConfig {
   };
   MOCK_OTP: string;
   ADMIN_SETUP_SECRET?: string;
+  CLOUDINARY: {
+    CLOUD_NAME?: string;
+    API_KEY?: string;
+    API_SECRET?: string;
+  };
 }
 
 const requiredEnvVars = [
@@ -41,6 +46,11 @@ const loadEnvVars = (): EnvConfig => {
     },
     MOCK_OTP: process.env.MOCK_OTP || '123456',
     ADMIN_SETUP_SECRET: process.env.ADMIN_SETUP_SECRET,
+    CLOUDINARY: {
+      CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+      API_KEY: process.env.CLOUDINARY_API_KEY,
+      API_SECRET: process.env.CLOUDINARY_API_SECRET,
+    },
   };
 };
 

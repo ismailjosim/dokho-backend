@@ -31,6 +31,30 @@ const workerProfileSchema = new Schema<IWorkerProfile>(
       type: String,
       trim: true,
     },
+    profilePhotoUrl: {
+      type: String,
+      trim: true,
+    },
+    profilePhotoPublicId: {
+      type: String,
+      trim: true,
+    },
+    nidFrontUrl: {
+      type: String,
+      trim: true,
+    },
+    nidFrontPublicId: {
+      type: String,
+      trim: true,
+    },
+    nidBackUrl: {
+      type: String,
+      trim: true,
+    },
+    nidBackPublicId: {
+      type: String,
+      trim: true,
+    },
     experienceYears: {
       type: Number,
       default: 0,
